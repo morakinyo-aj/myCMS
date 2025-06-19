@@ -25,7 +25,14 @@ def init_main_routes(app):
     @login_required
     def dashboard():
         form = ContentForm()
-        user_content = Content.query.filter_by(user_id=current_user.id).all()
+        search_query = request.args.get('search', '').strip()
+        if search_query:
+            user_content = Content.query.filter(
+                Content.user_id == current_user.id,
+                Content.title.ilike(f"%{search_query}%")
+            ).all()
+        else:
+            user_content = Content.query.filter_by(user_id=current_user.id).all()
         if form.validate_on_submit():
             try:
                 file = form.file.data

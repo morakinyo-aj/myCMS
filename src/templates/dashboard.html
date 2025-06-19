@@ -49,6 +49,30 @@
         .logout-btn:hover {
             background-color: #e61e4d;
         }
+
+        .search-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px 0 0 6px;
+            color: white;
+        }
+
+        .search-form button {
+            background-color: #25f4ee;
+            border: none;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
         
         .upload-section {
             background-color: #121212;
@@ -258,6 +282,10 @@
         
         <section>
             <h2 class="section-title">Your Content</h2>
+            <form method="GET" class="search-form">
+                <input type="text" name="search" placeholder="Search by title" value="{{ request.args.get('search', '') }}">
+                <button type="submit">Search</button>
+            </form>
             
             {% if content %}
                 <div class="content-grid">
