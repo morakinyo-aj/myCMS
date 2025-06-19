@@ -1,0 +1,10 @@
+.env
+.ipynb_checkpoints
+/engine
+script.py
+.DS_Store
+/pycache
+/src/dataset
+/src/instance/uploads/
+/src/videoClassifier.ipynb
+videoClassifier.ipynb

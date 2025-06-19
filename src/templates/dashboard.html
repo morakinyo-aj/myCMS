@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        
+        .welcome {
+            font-size: 24px;
+            color: white;
+            margin: 0;
+        }
+        
+        .logout-btn {
+            background-color: #fe2c55;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background-color: #e61e4d;
+        }
+        
+        .upload-section {
+            background-color: #121212;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(254, 44, 85, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .section-title {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #1e1e1e;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #fe2c55;
+        }
+        
+        .submit-btn {
+            background-color: #fe2c55;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e61e4d;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .content-card {
+            background-color: #121212;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.2s;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(254, 44, 85, 0.2);
+        }
+        
+        .media-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .media-container video,
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-title {
+            margin: 0 0 10px 0;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .card-text {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background-color: #2a2a2a;
+            color: #25f4ee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            background-color: #121212;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="welcome">Welcome, {{username}}!</h1>
+            <a href="https://tiktok.com/login" target="_blank" class="logout-btn" style="background-color: #25F4EE; color: #000; margin-right: 10px;">
+            Share to TikTok
+        </a>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </header>
+        
+        <section class="upload-section">
+            <h2 class="section-title">Upload New Content</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group">
+                    {{ form.title.label }}
+                    {{ form.title(placeholder="Enter title") }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.description.label }}
+                    {{ form.description(placeholder="Enter description") }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.file.label }}
+                    {{ form.file() }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.tags.label }}
+                    {{ form.tags(placeholder="fun, sports, tutorial") }}
+                </div>
+
+                {{ form.submit(class="submit-btn") }}
+            </form>
+        </section>
+        
+        <section>
+            <h2 class="section-title">Your Content</h2>
+            
+            {% if content %}
+                <div class="content-grid">
+                    {% for item in content %}
+                    <div class="content-card">
+                        <div class="media-container">
+                            {% if item.content_type == 'video' %}
+                                <video controls>
+                                    <source src="/upload/{{ item.filename }}">
+                                </video>
+                            {% else %}
+                                <img src="/upload/{{ item.filename }}" alt="{{ item.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.title }}</h3>
+                            <p class="card-text">{{ item.description }}</p>
+                            {% if item.tags %}
+                            <div class="tags">
+                                {% for tag in item.tags.split(',') %}
+                                    <span class="tag">{{ tag.strip() }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <span>{{ item.created_at.strftime('%b %d, %Y') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>No content uploaded yet.</p>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+</body>
+</html>
