@@ -6,3 +6,5 @@ script.py
 /pycache
 /src/dataset
 /src/instance/uploads/
+
+/src/instance/database.db
