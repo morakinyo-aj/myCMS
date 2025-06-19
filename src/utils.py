@@ -7,16 +7,12 @@ login_manager = LoginManager()
 bcrypt = Bcrypt()
 
 HASHTAG_MAP = {
-    "ApplyEyeMakeup": ["#makeup", "#beauty", "#eyemakeup"],
-    "ApplyLipstick": ["#lipstick", "#makeuplooks", "#cosmetics"],
-    "Archery": ["#archery", "#bowandarrow", "#target"],
-    "BabyCrawling": ["#baby", "#crawlingbaby", "#cutebabies"],
-    "BalanceBeam": ["#gymnastics", "#balance", "#beamwork"],
-    "BandMarching": ["#marchingband", "#bandlife", "#parade"],
-    "BaseballPitch": ["#baseball", "#pitching", "#sportsclip"],
-    "Basketball": ["#basketball", "#hoops", "#dunk"],
-    "BasketballDunk": ["#basketball", "#slam", "#dunkcontest"],
-    "BenchPress": ["#benchpress", "#gymmotivation", "#liftheavy"]
+    "basketball": ["#basketball", "#sports", "#hoops"],
+    "cooking": ["#cooking", "#food", "#recipe"],
+    "gymnastics": ["#gymnastics", "#flexibility", "#athlete"],
+    "music": ["#music", "#song", "#performance"],
+    "soccer": ["#soccer", "#football", "#goal"],
+    "workout": ["#workout", "#fitness", "#exercise"],
 }
 
 def generate_hashtags(predicted_class):
