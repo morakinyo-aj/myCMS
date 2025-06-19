@@ -23,5 +23,6 @@ from routes.main import init_main_routes
 init_auth_routes(app)
 init_main_routes(app)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(port=8080)
+

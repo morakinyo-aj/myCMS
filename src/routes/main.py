@@ -5,7 +5,8 @@ from werkzeug.utils import secure_filename
 from models.models import Content, User
 import datetime
 from config import Config
-from utils import db
+from utils import db, generate_hashtags
+from classifier import predict_video_tag
 import os
 import videodb
 
@@ -37,6 +38,12 @@ def init_main_routes(app):
                 ext = filename.rsplit('.', 1)[1].lower()
                 content_type = 'video' if ext in {'mp4', 'mov'} else 'image'
                 
+                tags_data = form.tags.data
+                if content_type == 'video':
+                    predicted = predict_video_tag(filepath)
+                    if predicted:
+                        tags_data = ", ".join(generate_hashtags(predicted))
+
                 # Save to db
                 new_content = Content(
                     title=form.title.data,
@@ -45,7 +52,7 @@ def init_main_routes(app):
                     filepath=filepath,
                     user_id=current_user.id,
                     content_type=content_type,
-                    tags=form.tags.data
+                    tags=tags_data
                 )
                 
                 db.session.add(new_content)
